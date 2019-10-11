@@ -12,7 +12,7 @@
     <app></app>
     <script type="text/template" id="template">
         <div id="app">
-            <div id="players">
+            <div id="players" v-if="opened">
                 <div id="player1">
                     <p class="name">{{ player1 }}</p>
                     <input type="text" class="url" v-model="url1">
@@ -23,8 +23,9 @@
                 </div>
                 <button id="compare" @click="compare">비교하기</button>
             </div>
-            <div id="result">
-                <p v-for="(data) in player1data">{{ data.name }} : {{ data.pp }}</p>
+            <button id="toggle" @click="opened = !opened"><span v-if="opened">△</span><span v-else>▽</span></button>
+            <div id="result" :style="{ height: opened?'calc(100% - 160px)':'calc(100% - 30px)' }">
+                <p v-for="data in player1data">{{ data.pp }} : {{ data.name }} : {{ player2pp(data) }}</p>
             </div>
         </div>
     </script>
