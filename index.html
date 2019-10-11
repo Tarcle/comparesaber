@@ -23,6 +23,9 @@
                 </div>
                 <button id="compare" @click="compare">비교하기</button>
             </div>
+            <div id="result">
+                <p v-for="(data) in player1data">{{ data.name }} : {{ data.pp }}</p>
+            </div>
         </div>
     </script>
     <script src="vue.min.js"></script>
