@@ -2,13 +2,14 @@ var app = new Vue({
     el: 'app',
     template: '#template',
     data: {
-        load_page: 10,
+        load_page: 15,
         
         opened: true,
         url1: 'http://scoresaber.com/u/76561198053868259',
         url2: 'http://scoresaber.com/u/76561198298645747',
-        player1: '플레이어 1',
-        player2: '플레이어 2',
+        player1name: '플레이어 1',
+        player2name: '플레이어 2',
+        name: [],
         player1data: [],
         player2data: [],
     },
@@ -35,18 +36,19 @@ var app = new Vue({
                         html = document.createElement('div');
                         html.innerHTML = text;
                         if(need[player]) {
-                            if(player==1) app.player1 = html.querySelector('.title a').innerText;
-                            else if(player==2) app.player2 = html.querySelector('.title a').innerText;
+                            app.name[player] = html.querySelector('.title a').innerText;
                             need[player] = false;
                         }
                         songs = html.querySelectorAll("table.ranking.songs>tbody>tr");
                         for(j=0; j<songs.length; j++) {
                             song = songs[j];
-                            name = song.querySelector("th.song .songTop.pp").innerText;
+                            name = song.querySelector("th.song .songTop.pp").innerHTML;
                             pp = song.querySelector("th.score .ppValue").innerText;
-                            data = {name: name, pp: parseFloat(pp)};
+                            pp_html = song.querySelector("th.score").innerHTML;
+                            data = {name: name, pp: parseFloat(pp), pp_html: pp_html};
                             playerdata.push(data);
                         }
+                        return playerdata;
                     }));
                 }
             }
@@ -54,7 +56,9 @@ var app = new Vue({
             result2 = [];
             fetch_(this.url1, result1, 1);
             fetch_(this.url2, result2, 2);
-            Promise.all(proms).then(values => {
+            Promise.all(proms).then(() => {
+                app.player1name = app.name[1];
+                app.player2name = app.name[2];
                 result1.sort((a,b) => b.pp - a.pp);
                 result2.sort((a,b) => b.pp - a.pp);
                 app.player1data = result1;
@@ -62,8 +66,10 @@ var app = new Vue({
             })
         },
         player2pp(data) {
-            res = this.player2data.filter(data2 => data.name == data2.name)[0];
-            return res ? res.pp : '-';
+            return this.player2data.filter(data2 => data.name == data2.name)[0];
+        },
+        getWinner(data) {
+            return data.pp >= ((tmp=this.player2pp(data))?tmp.pp:0) ? 1 : 2
         }
     }
 })

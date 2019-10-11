@@ -12,20 +12,30 @@
     <app></app>
     <script type="text/template" id="template">
         <div id="app">
-            <div id="players" v-if="opened">
-                <div id="player1">
-                    <p class="name">{{ player1 }}</p>
-                    <input type="text" class="url" v-model="url1">
+            <div id="toggle-box">
+                <div id="players" v-if="opened">
+                    <div id="player1">
+                        <p class="name">{{ player1name }}</p>
+                        <input type="text" class="url" v-model="url1">
+                    </div>
+                    <div id="player2">
+                        <p class="name">{{ player2name }}</p>
+                        <input type="text" class="url" v-model="url2">
+                    </div>
+                    <button id="compare" @click="compare">비교하기</button>
                 </div>
-                <div id="player2">
-                    <p class="name">{{ player2 }}</p>
-                    <input type="text" class="url" v-model="url2">
-                </div>
-                <button id="compare" @click="compare">비교하기</button>
+                <button id="toggle" @click="opened = !opened"><span v-if="opened">△</span><span v-else>▽</span></button>
             </div>
-            <button id="toggle" @click="opened = !opened"><span v-if="opened">△</span><span v-else>▽</span></button>
-            <div id="result" :style="{ height: opened?'calc(100% - 160px)':'calc(100% - 30px)' }">
-                <p v-for="data in player1data">{{ data.pp }} : {{ data.name }} : {{ player2pp(data) }}</p>
+            <div id="result" :style="{ 'padding-top': opened?'160px':'30px' }">
+                <table>
+                    <tbody>
+                        <tr v-for="data in player1data">
+                            <td class="player1pp" v-html="data.pp_html" :class="{ win: getWinner(data)==1 }"></td>
+                            <td class="song" v-html="data.name"></td>
+                            <td class="player2pp" v-html="(tmp=player2pp(data))?tmp.pp_html:'-'" :class="{ win: getWinner(data)==2 }"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </script>
