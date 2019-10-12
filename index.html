@@ -33,7 +33,7 @@
                     <tbody>
                         <tr v-for="data in player1data">
                             <td class="player1pp" v-html="data.pp_html" :class="{ win: getWinner(data)==1 }"></td>
-                            <td class="song" v-html="data.name"></td>
+                            <td class="song" v-html="data.name_html"></td>
                             <td class="player2pp" v-html="(tmp=player2pp(data))?tmp.pp_html:'-'" :class="{ win: getWinner(data)==2 }"></td>
                         </tr>
                     </tbody>

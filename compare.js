@@ -43,9 +43,10 @@ var app = new Vue({
                         for(j=0; j<songs.length; j++) {
                             song = songs[j];
                             name = song.querySelector("th.song .songTop.pp").innerHTML;
+                            name_html = song.querySelector("th.song a").innerHTML;
                             pp = song.querySelector("th.score .ppValue").innerText;
                             pp_html = song.querySelector("th.score").innerHTML;
-                            data = {name: name, pp: parseFloat(pp), pp_html: pp_html};
+                            data = {name: name, name_html: name_html, pp: parseFloat(pp), pp_html: pp_html};
                             playerdata.push(data);
                         }
                         return playerdata;
@@ -66,7 +67,7 @@ var app = new Vue({
             })
         },
         player2pp(data) {
-            return this.player2data.filter(data2 => data.name == data2.name)[0];
+            return this.player2data.filter(data2 => data.name_html == data2.name_html)[0];
         },
         getWinner(data) {
             return data.pp >= ((tmp=this.player2pp(data))?tmp.pp:0) ? 1 : 2
