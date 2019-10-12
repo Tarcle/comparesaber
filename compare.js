@@ -42,11 +42,10 @@ var app = new Vue({
                         songs = html.querySelectorAll("table.ranking.songs>tbody>tr");
                         for(j=0; j<songs.length; j++) {
                             song = songs[j];
-                            name = song.querySelector("th.song .songTop.pp").innerHTML;
                             name_html = song.querySelector("th.song a").innerHTML;
                             pp = song.querySelector("th.score .ppValue").innerText;
                             pp_html = song.querySelector("th.score").innerHTML;
-                            data = {name: name, name_html: name_html, pp: parseFloat(pp), pp_html: pp_html};
+                            data = {name_html: name_html, pp: parseFloat(pp), pp_html: pp_html};
                             playerdata.push(data);
                         }
                         return playerdata;
