@@ -29,7 +29,7 @@
                 <button id="toggle" @click="opened = !opened"><span v-if="opened">△</span><span v-else>▽</span></button>
             </div>
             <div id="result" :style="{ 'padding-top': opened?'160px':'30px' }">
-                <table>
+                <table v-if="load_count >= load_page*2">
                     <tbody>
                         <tr v-for="data in player1data">
                             <td class="player1pp" v-html="data.pp_html" :class="{ win: getWinner(data)==1 }"></td>
@@ -38,6 +38,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <div id="progress-bar" v-else>
+                    <span class="progress-text">{{ progress }}</span>
+                    <p class="progress-bar" :style="{ width: progress+'%' }"></p>
+                </div>
             </div>
         </div>
     </script>

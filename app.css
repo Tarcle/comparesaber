@@ -37,14 +37,16 @@ p {
     width: 50%;
 }
 #player1>.name {
-    color: #f70;
+    height: 40px;
     line-height: 40px;
+    color: #f70;
     font-weight: bold;
     font-size: 24px;
 }
 #player2>.name {
-    color: #07f;
+    height: 40px;
     line-height: 40px;
+    color: #07f;
     font-weight: bold;
     font-size: 24px;
 }
@@ -73,10 +75,32 @@ p {
     cursor: pointer;
 }
 
+
 #result {
     float: left;
     padding-top: 160px;
     width: 100%;
+    height: 100%;
+}
+#progress-bar {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100%;
+    background: #111;
+}
+#progress-bar>.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    transform: translateY(-50%);
+}
+#progress-bar>.progress-bar {
+    width: 0;
+    height: 100%;
+    background: #953682;
 }
 #result>table {
     width: 100%;
